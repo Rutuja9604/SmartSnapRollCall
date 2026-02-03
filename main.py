@@ -4,6 +4,9 @@ from PIL import Image, ImageTk
 import cv2
 import os
 
+icon_path = os.path.join("assets", "logo.png")
+icon = tk.PhotoImage(file=icon_path)
+self.iconphoto(True, icon)
 # ✅ Import routed Frame pages (NOT Tk windows)
 from admin_login import AdminLoginPage
 from teacher_login import TeacherLoginPage

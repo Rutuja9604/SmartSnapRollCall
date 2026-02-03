@@ -21,6 +21,8 @@ class StudentDashboardPage(tk.Frame):
     def __init__(self, parent, controller):
         super().__init__(parent, bg="#0f1720")
         self.controller = controller
+        icon = tk.PhotoImage(file="assets/logo.png")
+        dash.iconphoto(True, icon)
 
         # ---- THEME ----
         self.FONT_BOLD = ("Segoe UI", 14, "bold")

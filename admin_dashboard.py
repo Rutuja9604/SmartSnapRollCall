@@ -14,6 +14,8 @@ class AdminDashboardPage(tk.Frame):
     def __init__(self, parent, controller):
         super().__init__(parent, bg="#F5F7FA")
         self.controller = controller
+        icon = tk.PhotoImage(file="assets/logo.png")
+        self.iconphoto(True, icon)
 
         self.active_btn = None
         self.menu_buttons = []

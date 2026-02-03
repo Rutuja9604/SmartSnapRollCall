@@ -16,6 +16,8 @@ from ttkbootstrap.constants import *
 from utils.database import get_connection
 from utils.face_recognition_utils import recognize_students
 
+icon = tk.PhotoImage(file="assets/logo.png")
+self.iconphoto(True, icon)
 
 # ------------------------- Utility functions -------------------------
 def get_exif_gps(img_path):
