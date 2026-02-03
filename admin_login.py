@@ -1,56 +1,97 @@
-# admin_login.py
 import tkinter as tk
 from tkinter import messagebox
-from admin_dashboard import AdminDashboard  # Import the dashboard class directly
 
-class AdminLogin(tk.Tk):
-    def __init__(self):
-        super().__init__()
 
-        self.title("Admin Login - Smart Snap")
-        self.geometry("500x400")
-        self.config(bg="#0a192f")
+class AdminLoginPage(tk.Frame):
+    def __init__(self, parent, controller):
+        super().__init__(parent, bg="#0a192f")
+        self.controller = controller
 
-        tk.Label(self, text="👨‍💼 Admin Login",
-                 font=("Segoe UI", 22, "bold"),
-                 bg="#0a192f", fg="white").pack(pady=30)
+        # ---------- TITLE ----------
+        tk.Label(
+            self,
+            text="👨‍💼 Admin Login",
+            font=("Segoe UI", 22, "bold"),
+            bg="#0a192f",
+            fg="white"
+        ).pack(pady=25)
 
+        # ---------- FORM ----------
         form = tk.Frame(self, bg="#0a192f")
-        form.pack(pady=20)
+        form.pack(pady=10)
 
-        tk.Label(form, text="Username:", font=("Segoe UI", 12),
-                 bg="#0a192f", fg="white").grid(row=0, column=0, pady=10, sticky="e")
+        tk.Label(
+            form,
+            text="Username:",
+            font=("Segoe UI", 12),
+            bg="#0a192f",
+            fg="white"
+        ).grid(row=0, column=0, pady=10, sticky="e")
+
         self.username = tk.Entry(form, width=25, font=("Segoe UI", 12))
-        self.username.grid(row=0, column=1, pady=10)
+        self.username.grid(row=0, column=1, pady=10, padx=10)
 
-        tk.Label(form, text="Password:", font=("Segoe UI", 12),
-                 bg="#0a192f", fg="white").grid(row=1, column=0, pady=10, sticky="e")
+        tk.Label(
+            form,
+            text="Password:",
+            font=("Segoe UI", 12),
+            bg="#0a192f",
+            fg="white"
+        ).grid(row=1, column=0, pady=10, sticky="e")
+
         self.password = tk.Entry(form, width=25, font=("Segoe UI", 12), show="*")
-        self.password.grid(row=1, column=1, pady=10)
+        self.password.grid(row=1, column=1, pady=10, padx=10)
 
-        tk.Button(self, text="Login",
-                  font=("Segoe UI", 12, "bold"),
-                  bg="#0078D7", fg="white",
-                  width=12, command=self.check_login).pack(pady=30)
+        # ---------- BUTTONS ----------
+        btn_row = tk.Frame(self, bg="#0a192f")
+        btn_row.pack(pady=20)
+
+        tk.Button(
+            btn_row,
+            text="⬅ Back",
+            font=("Segoe UI", 11, "bold"),
+            bg="#30363d",
+            fg="white",
+            width=12,
+            bd=0,
+            cursor="hand2",
+            command=self.controller.back
+        ).pack(side="left", padx=10)
+
+        tk.Button(
+            btn_row,
+            text="Login",
+            font=("Segoe UI", 11, "bold"),
+            bg="#0078D7",
+            fg="white",
+            width=12,
+            bd=0,
+            cursor="hand2",
+            command=self.check_login
+        ).pack(side="left", padx=10)
+
+        # Enter key triggers login
+        self.password.bind("<Return>", lambda e: self.check_login())
+
+    def on_show(self):
+        """Called by router when this page opens."""
+        self.username.delete(0, tk.END)
+        self.password.delete(0, tk.END)
+        self.username.focus_set()
 
     def check_login(self):
         user = self.username.get().strip()
         pwd = self.password.get().strip()
 
-        # Replace with your database authentication if needed
+        # Basic validation
+        if not user or not pwd:
+            messagebox.showwarning("Validation", "Enter username and password")
+            return
+
+        # Temporary credentials (replace with DB later)
         if user == "admin" and pwd == "admin123":
+            self.controller.session["admin"] = {"username": user}
             messagebox.showinfo("Success", "Welcome Admin!")
-            self.open_dashboard()
+            self.controller.navigate("AdminDashboardPage")
         else:
             messagebox.showerror("Error", "Invalid credentials!")
-
-    def open_dashboard(self):
-        # Close login window and open admin dashboard in the same process
-        self.destroy()
-        dashboard = AdminDashboard()
-        dashboard.mainloop()
-
-
-if __name__ == "__main__":
-    app = AdminLogin()
-    app.mainloop()

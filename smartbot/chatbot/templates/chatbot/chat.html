@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SmartBot Assistant</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #0f1720;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+        }
+
+        .chat-container {
+            width: 380px;
+            height: 600px;
+            background: #1e293b;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: #075e54;
+            color: white;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .chat-body {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+            background: #e5ddd5;
+        }
+
+        .msg {
+            max-width: 75%;
+            padding: 10px;
+            margin: 6px 0;
+            border-radius: 10px;
+            font-size: 14px;
+            line-height: 1.4;
+            clear: both;
+        }
+
+        .user {
+            background: #dcf8c6;
+            float: right;
+            text-align: right;
+        }
+
+        .bot {
+            background: white;
+            float: left;
+        }
+
+        .chat-footer {
+            display: flex;
+            padding: 8px;
+            background: #f0f0f0;
+        }
+
+        .chat-footer input {
+            flex: 1;
+            padding: 8px;
+            border-radius: 20px;
+            border: none;
+            outline: none;
+        }
+
+        .chat-footer button {
+            margin-left: 8px;
+            padding: 8px 14px;
+            background: #25d366;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="chat-container">
+    <div class="chat-header">🤖 SmartBot - Attendance Assistant</div>
+
+    <div class="chat-body" id="chatBody">
+        <div class="msg bot">Hello 👋 I am SmartBot. How can I help you today?</div>
+    </div>
+
+    <div class="chat-footer">
+        <input type="text" id="messageInput" placeholder="Type a message...">
+        <button onclick="sendMessage()">➤</button>
+    </div>
+</div>
+
+<script>
+    function sendMessage() {
+        const input = document.getElementById("messageInput");
+        const message = input.value.trim();
+        if (message === "") return;
+
+        const chatBody = document.getElementById("chatBody");
+
+        // User message
+        const userDiv = document.createElement("div");
+        userDiv.className = "msg user";
+        userDiv.innerText = message;
+        chatBody.appendChild(user
